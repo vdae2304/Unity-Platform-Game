@@ -19,17 +19,15 @@ public class Frog : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.tag == "Ground") {
-            StartCoroutine(Jump(stepSize));
-            stepSize *= -1;
+            animator.SetBool("jump", false);
+            Invoke("Jump", 5.0f);
         }
     }
 
-    IEnumerator Jump(float distance) {
-        yield return new WaitForSeconds(5.0f);
-        spriteRenderer.flipX = (distance > 0);
+    void Jump() {
+        spriteRenderer.flipX = (stepSize > 0);
         animator.SetBool("jump", true);
-        rigidBody.velocity = new Vector2(distance, jumpForce);
-        yield return new WaitForSeconds(1.5f);
-        animator.SetBool("jump", false);
+        rigidBody.velocity = new Vector2(stepSize, jumpForce);
+        stepSize *= -1;
     }
 }
