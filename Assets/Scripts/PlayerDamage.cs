@@ -7,69 +7,54 @@ public class PlayerDamage : MonoBehaviour {
     private Animator animator;
     private Rigidbody2D rigidBody;
     private SpriteRenderer spriteRenderer;
-    private UIManager ui;
-    private Vector3 initialPosition;
+    private UIManager UI;
     
-    public int lives = 3;
-    public int hearts = 3;
-    private float jumpForce;
+    public static int lifes = 3;
+    public static int hearts = 3;
 
     void Start() {
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        ui = GameObject.Find("UI").GetComponent<UIManager>();
-        initialPosition = transform.position;
-        jumpForce = GetComponent<PlayerController>().jumpForce;
+        UI = GameObject.Find("UI").GetComponent<UIManager>();
     }
 
     void Update() {
-        if (transform.position.y < -10) {
-            StartCoroutine(DecreaseLivesByOne());
-        }
-    }
-
-    void DecreaseHeartsByOne() {
-        ui.updateNumberOfHearts(--hearts);
-        if (hearts == 0) {
-            StartCoroutine(DecreaseLivesByOne());
-        }
-    }
-
-    IEnumerator DecreaseLivesByOne() {
-        spriteRenderer.enabled = false;
-        transform.position = initialPosition;
-        yield return new WaitForSeconds(1.0f);
-
-        hearts = 3;
-        spriteRenderer.enabled = true;
-        ui.updateNumberOfHearts(hearts);
-        ui.updateNumberOfLives(--lives);
-        if (lives == 0) {
-            Debug.Log("Game Over");
-            Application.Quit();
+        if (Time.deltaTime != 0 && transform.position.y < -10) {
+            UI.displayTryAgainScreen();
         }
     }
 
     void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.tag == "Enemy") {
-            Vector2 bounce = other.transform.position - transform.position;
             animator.SetTrigger("isHurt");
-            rigidBody.AddForce(jumpForce*bounce.normalized,ForceMode2D.Impulse);
-            DecreaseHeartsByOne();
+            increaseNumberOfHearts(-1);
         }
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.tag == "ExtraLive") {
-            ui.updateNumberOfLives(++lives);
-            Destroy(other.gameObject);
-        }
-        else if (other.gameObject.tag == "Enemy") {
+        if (other.gameObject.tag == "Enemy") {
             other.enabled = false;
-            rigidBody.velocity = jumpForce * Vector2.up;
+            rigidBody.velocity = PlayerController.jumpForce * Vector2.up;
             other.gameObject.GetComponent<Animator>().SetTrigger("isDeath");
             Destroy(other.gameObject, 0.5f);
         }
+    }
+
+    public void increaseNumberOfHearts(int value) {
+        hearts = Mathf.Clamp(hearts + value, 0, 3);
+        UI.updateNumberOfHearts(hearts);
+        if (hearts == 0) {
+            UI.displayTryAgainScreen();
+        }
+    }
+
+    public void increaseNumberOfLifes(int value, bool resetHearts = true) {
+        if (resetHearts) {
+            hearts = 3;
+            UI.updateNumberOfHearts(hearts);
+        }
+        lifes = Mathf.Max(lifes + value, 0);
+        UI.updateNumberOfLifes(lifes);
     }
 }

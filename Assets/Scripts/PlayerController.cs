@@ -11,8 +11,8 @@ public class PlayerController : MonoBehaviour {
     private AudioSource audioSource;
     private AudioClip jumpSound;
 
-    public float speed = 7.0f;
-    public float jumpForce = 8.0f;
+    public static float speed = 7.0f;
+    public static float jumpForce = 8.0f;
     private bool isOnGround = true;
     private bool isOnLadder = false;
 
@@ -25,29 +25,31 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        if (Time.timeScale != 0) {
+            float horizontalInput = Input.GetAxis("Horizontal");
+            float verticalInput = Input.GetAxis("Vertical");
 
-        Vector2 velocity = rigidBody.velocity;
-        velocity.x = horizontalInput * speed;
-        if (isOnLadder) {
-            velocity.y = verticalInput * speed;
+            Vector2 velocity = rigidBody.velocity;
+            velocity.x = horizontalInput * speed;
+            if (isOnLadder) {
+                velocity.y = verticalInput * speed;
+            }
+            
+            if (horizontalInput != 0) {
+                animator.SetBool("isRunning", true);
+                spriteRenderer.flipX = (horizontalInput < 0);
+            }
+            else {
+                animator.SetBool("isRunning", false);
+            }
+            if (Input.GetButtonDown("Jump") && isOnGround) {
+                velocity.y = jumpForce;
+                animator.SetBool("jump", true);
+                audioSource.PlayOneShot(jumpSound, 0.7f);
+            }
+            
+            rigidBody.velocity = velocity;
         }
-        
-        if (horizontalInput != 0) {
-            animator.SetBool("isRunning", true);
-            spriteRenderer.flipX = (horizontalInput < 0);
-        }
-        else {
-            animator.SetBool("isRunning", false);
-        }
-        if (Input.GetKeyDown("space") && isOnGround) {
-            velocity.y = jumpForce;
-            animator.SetBool("jump", true);
-            audioSource.PlayOneShot(jumpSound, 0.7f);
-        }
-        
-        rigidBody.velocity = velocity;
     }
 
     void OnTriggerEnter2D(Collider2D other) {
