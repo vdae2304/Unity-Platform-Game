@@ -19,14 +19,14 @@ public class Frog : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.tag == "Ground") {
-            animator.SetBool("jump", false);
+            animator.SetBool("isJumping", false);
             Invoke("Jump", 5.0f);
         }
     }
 
     void Jump() {
         spriteRenderer.flipX = (stepSize > 0);
-        animator.SetBool("jump", true);
+        animator.SetBool("isJumping", true);
         rigidBody.velocity = new Vector2(stepSize, jumpForce);
         stepSize *= -1;
     }

@@ -2,36 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour {
 
     [SerializeField] private AudioSource audioSource;
 
-    [SerializeField] private Image HeartsCounter;
-    [SerializeField] private Sprite[] HeartsSprites;
-    [SerializeField] private Text LifesCounter;
+    [SerializeField] private Image heartsCounter;
+    [SerializeField] private Sprite[] heartsSprites;
+    [SerializeField] private Text lifesCounter;
 
-    [SerializeField] private Text Pause;
-    [SerializeField] private GameObject TryAgain;
-    [SerializeField] private GameObject GameOver;
-
-    void Start() {
-        updateNumberOfHearts(PlayerDamage.hearts);
-        updateNumberOfLifes(PlayerDamage.lifes);
-        Pause.enabled = false;
-        TryAgain.SetActive(false);
-        GameOver.SetActive(false);
-    }
+    [SerializeField] private GameObject pauseScreen;
+    [SerializeField] private GameObject tryAgainScreen;
+    [SerializeField] private GameObject gameOverScreen;
 
     void Update() {
-        if (!TryAgain.activeSelf && Input.GetButtonDown("Submit")) {
+        heartsCounter.sprite = heartsSprites[PlayerDamage.hearts];
+        lifesCounter.text = PlayerDamage.lifes.ToString();
+        if (
+            Input.GetButtonDown("Submit") && 
+            !tryAgainScreen.activeSelf && 
+            !gameOverScreen.activeSelf
+        ) {
             togglePause();
         }
     }
 
     public void togglePause() {
-        Pause.enabled = !Pause.enabled;
-        if (Pause.enabled) {
+        pauseScreen.SetActive(!pauseScreen.activeSelf);
+        if (pauseScreen.activeSelf) {
             audioSource.Pause();
             Time.timeScale = 0f;
         }
@@ -45,18 +44,21 @@ public class UIManager : MonoBehaviour {
         audioSource.Stop();
         Time.timeScale = 0f;
         if (PlayerDamage.lifes > 0) {
-            TryAgain.SetActive(true);
+            tryAgainScreen.SetActive(true);
         }
         else {
-            GameOver.SetActive(true);
+            gameOverScreen.SetActive(true);
         }
     }
-    
-    public void updateNumberOfHearts(int hearts) {
-        HeartsCounter.sprite = HeartsSprites[hearts];
+
+    public void RestartLevel() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        PlayerDamage.lifes--;
+        PlayerDamage.hearts = 3;
+        Time.timeScale = 1f;
     }
 
-    public void updateNumberOfLifes(int lifes) {
-        LifesCounter.text = lifes.ToString();
+    public void Quit() {
+        Application.Quit();
     }
 }

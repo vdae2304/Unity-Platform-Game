@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        if (Time.timeScale != 0) {
+        if (Time.timeScale != 0 && rigidBody != null) {
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
 
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour {
             }
             if (Input.GetButtonDown("Jump") && isOnGround) {
                 velocity.y = jumpForce;
-                animator.SetBool("jump", true);
+                animator.SetBool("isJumping", true);
                 audioSource.PlayOneShot(jumpSound, 0.7f);
             }
             
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Ground") {
             isOnGround = true;
-            animator.SetBool("jump", false);
+            animator.SetBool("isJumping", false);
         }
         else if (other.gameObject.tag == "Ladder") {
             isOnLadder = true;

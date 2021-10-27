@@ -19,16 +19,21 @@ public class PlayerDamage : MonoBehaviour {
         UI = GameObject.Find("UI").GetComponent<UIManager>();
     }
 
-    void Update() {
-        if (Time.deltaTime != 0 && transform.position.y < -10) {
-            UI.displayTryAgainScreen();
-        }
-    }
-
     void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.tag == "Enemy") {
             animator.SetTrigger("isHurt");
-            increaseNumberOfHearts(-1);
+            if (hearts > 0) {
+                hearts--;
+            }
+            if (hearts == 0) {
+                animator.SetTrigger("isDeath");
+                Destroy(rigidBody);
+                Destroy(this, 0.75f);
+            }
+        }
+        else if (other.gameObject.tag == "InstantKill") {
+            hearts = 0;
+            Destroy(this);
         }
     }
 
@@ -37,24 +42,11 @@ public class PlayerDamage : MonoBehaviour {
             other.enabled = false;
             rigidBody.velocity = PlayerController.jumpForce * Vector2.up;
             other.gameObject.GetComponent<Animator>().SetTrigger("isDeath");
-            Destroy(other.gameObject, 0.5f);
+            Destroy(other.gameObject, 0.75f);
         }
     }
 
-    public void increaseNumberOfHearts(int value) {
-        hearts = Mathf.Clamp(hearts + value, 0, 3);
-        UI.updateNumberOfHearts(hearts);
-        if (hearts == 0) {
-            UI.displayTryAgainScreen();
-        }
-    }
-
-    public void increaseNumberOfLifes(int value, bool resetHearts = true) {
-        if (resetHearts) {
-            hearts = 3;
-            UI.updateNumberOfHearts(hearts);
-        }
-        lifes = Mathf.Max(lifes + value, 0);
-        UI.updateNumberOfLifes(lifes);
+    void OnDestroy() {
+        UI.displayTryAgainScreen();
     }
 }

@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class ExtraLife : MonoBehaviour {
 
-    private PlayerDamage player;
-
-    void Start() {
-        player = GameObject.Find("player").GetComponent<PlayerDamage>();
-    }
-
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Player") {
-            player.increaseNumberOfLifes(1);
+            PlayerDamage.lifes += 1;
             Destroy(gameObject);
         }
     }
