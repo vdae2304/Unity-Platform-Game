@@ -20,7 +20,8 @@ public class PlayerController : MonoBehaviour {
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
+        audioSource = GameObject.Find("UI/Audio Source")
+                                .GetComponent<AudioSource>();
         jumpSound = Resources.Load<AudioClip>("Audio/smrpg_jump");
     }
 

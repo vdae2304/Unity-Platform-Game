@@ -9,6 +9,8 @@ TagManager:
   - Ladder
   - ExtraLive
   - InstantKill
+  - Cherry
+  - Diamond
   layers:
   - Default
   - TransparentFX

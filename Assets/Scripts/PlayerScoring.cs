@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDamage : MonoBehaviour {
+public class PlayerScoring : MonoBehaviour {
 
     private Animator animator;
     private Rigidbody2D rigidBody;
@@ -11,6 +11,8 @@ public class PlayerDamage : MonoBehaviour {
     
     public static int lifes = 3;
     public static int hearts = 3;
+    public static int cherries = 0;
+    public static int gems = 0;
 
     void Start() {
         animator = GetComponent<Animator>();

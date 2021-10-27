@@ -11,14 +11,34 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Image heartsCounter;
     [SerializeField] private Sprite[] heartsSprites;
     [SerializeField] private Text lifesCounter;
+    [SerializeField] private Text cherryCounter;
+    [SerializeField] private Text gemCounter;
+    
+    public float timeLimitInSeconds = 100;
+    [SerializeField] private Text timeCounter;
 
-    [SerializeField] private GameObject pauseScreen;
-    [SerializeField] private GameObject tryAgainScreen;
-    [SerializeField] private GameObject gameOverScreen;
+    private GameObject pauseScreen;
+    private GameObject tryAgainScreen;
+    private GameObject gameOverScreen;
+
+    void Start() {
+        pauseScreen = transform.Find("Pause").gameObject;
+        tryAgainScreen = transform.Find("TryAgain").gameObject;
+        gameOverScreen = transform.Find("GameOver").gameObject;
+    }
 
     void Update() {
-        heartsCounter.sprite = heartsSprites[PlayerDamage.hearts];
-        lifesCounter.text = PlayerDamage.lifes.ToString();
+        heartsCounter.sprite = heartsSprites[PlayerScoring.hearts];
+        lifesCounter.text = PlayerScoring.lifes.ToString();
+        cherryCounter.text = PlayerScoring.cherries.ToString();
+        gemCounter.text = PlayerScoring.gems.ToString();
+
+        timeLimitInSeconds -= Time.deltaTime;
+        timeCounter.text = Mathf.Round(timeLimitInSeconds).ToString();
+        if (timeLimitInSeconds <= 0f) {
+            displayTryAgainScreen();
+        }
+
         if (
             Input.GetButtonDown("Submit") && 
             !tryAgainScreen.activeSelf && 
@@ -43,7 +63,7 @@ public class UIManager : MonoBehaviour {
     public void displayTryAgainScreen() {
         audioSource.Stop();
         Time.timeScale = 0f;
-        if (PlayerDamage.lifes > 0) {
+        if (PlayerScoring.lifes > 0) {
             tryAgainScreen.SetActive(true);
         }
         else {
@@ -53,8 +73,8 @@ public class UIManager : MonoBehaviour {
 
     public void RestartLevel() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        PlayerDamage.lifes--;
-        PlayerDamage.hearts = 3;
+        PlayerScoring.lifes--;
+        PlayerScoring.hearts = 3;
         Time.timeScale = 1f;
     }
 
