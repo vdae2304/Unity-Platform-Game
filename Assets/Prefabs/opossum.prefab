@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5987236866551999465}
   - component: {fileID: 8666210063634906325}
   - component: {fileID: 5987236866551999466}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: opossum
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -157,4 +157,3 @@ MonoBehaviour:
   speed: 2
   chasingSpeed: 3
   maxDistance: 0
-  visibilityRadius: 0
