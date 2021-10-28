@@ -13,6 +13,9 @@ public class Eagle : MonoBehaviour {
     public Vector2 maxDistance;
     public float visibilityRadius;
 
+    public float dropProbability = 0.1f;
+    public GameObject[] dropItems;
+
     void Start() {
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -37,5 +40,18 @@ public class Eagle : MonoBehaviour {
             newVelocity.y = (distanceToCenter.y < 0 ? velocity.y : -velocity.y);
         }
         rigidBody.velocity = newVelocity;
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.tag == "Player") {
+            Invoke("RandomDrop", 0.5f);
+        }
+    }
+
+    void RandomDrop() {
+        if (Random.value <= dropProbability) {
+            GameObject drop = dropItems[Random.Range(0, dropItems.Length)];
+            Instantiate(drop, transform.position, transform.rotation);
+        }
     }
 }
