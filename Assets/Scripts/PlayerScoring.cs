@@ -29,26 +29,28 @@ public class PlayerScoring : MonoBehaviour {
             }
             if (hearts == 0) {
                 animator.SetTrigger("isDeath");
-                Invoke("KillPlayer", 0.75f);
+                rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+                Invoke("displayTryAgainScreen", 0.75f);
             }
         }
         else if (other.gameObject.tag == "InstantKill") {
             hearts = 0;
-            KillPlayer();
+            displayTryAgainScreen();
         }
     }
 
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Enemy") {
             other.enabled = false;
-            rigidBody.velocity = PlayerController.jumpForce * Vector2.up;
             other.gameObject.GetComponent<Animator>().SetTrigger("isDeath");
+            other.gameObject.GetComponent<Rigidbody2D>()
+                            .constraints = RigidbodyConstraints2D.FreezeAll;
+            rigidBody.velocity = PlayerController.jumpForce * Vector2.up;
             Destroy(other.gameObject, 0.75f);
         }
     }
 
-    void KillPlayer() {
-        gameObject.SetActive(false);
+    void displayTryAgainScreen() {
         UI.displayTryAgainScreen();
     }
 }

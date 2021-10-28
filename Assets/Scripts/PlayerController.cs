@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        if (Time.timeScale != 0 && rigidBody != null) {
+        if (Time.timeScale != 0) {
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
 
