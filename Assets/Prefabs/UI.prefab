@@ -1647,7 +1647,7 @@ MonoBehaviour:
   lifesCounter: {fileID: 918687790044152689}
   cherryCounter: {fileID: 5200122024871268082}
   gemCounter: {fileID: 4473730398988744011}
-  timeLimitInSeconds: 150
+  timeLimitInSeconds: 120
   timeIsRunning: 1
   timeCounter: {fileID: 8711786483355493546}
 --- !u!1 &6297869470554154806

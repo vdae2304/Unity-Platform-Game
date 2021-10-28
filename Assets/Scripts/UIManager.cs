@@ -14,7 +14,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Text cherryCounter;
     [SerializeField] private Text gemCounter;
     
-    public float timeLimitInSeconds = 100;
+    public float timeLimitInSeconds = 120;
     public bool timeIsRunning = true;
     [SerializeField] private Text timeCounter;
 
@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour {
         if (timeIsRunning) {
             timeLimitInSeconds -= Time.deltaTime;
             timeCounter.text = Mathf.Ceil(timeLimitInSeconds).ToString();
-            if (timeLimitInSeconds <= 10f) {
+            if (timeLimitInSeconds <= 30f) {
                 timeCounter.color = Color.red;
             }
             if (timeLimitInSeconds <= 0f) {

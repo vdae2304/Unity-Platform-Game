@@ -28,14 +28,11 @@ public class PlayerScoring : MonoBehaviour {
                 hearts--;
             }
             if (hearts == 0) {
-                animator.SetTrigger("isDeath");
-                rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
-                Invoke("displayTryAgainScreen", 0.75f);
+                StartCoroutine(PlayerDeath());
             }
         }
         else if (other.gameObject.tag == "InstantKill") {
-            hearts = 0;
-            displayTryAgainScreen();
+            StartCoroutine(PlayerDeath());
         }
     }
 
@@ -50,7 +47,11 @@ public class PlayerScoring : MonoBehaviour {
         }
     }
 
-    void displayTryAgainScreen() {
+    IEnumerator PlayerDeath() {
+        hearts = 0;
+        animator.SetTrigger("isDeath");
+        rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+        yield return new WaitForSeconds(0.75f);
         UI.displayTryAgainScreen();
     }
 }
