@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Text gemCounter;
     
     public float timeLimitInSeconds = 100;
+    public bool timeIsRunning = true;
     [SerializeField] private Text timeCounter;
 
     private GameObject pauseScreen;
@@ -33,10 +34,16 @@ public class UIManager : MonoBehaviour {
         cherryCounter.text = PlayerScoring.cherries.ToString();
         gemCounter.text = PlayerScoring.gems.ToString();
 
-        timeLimitInSeconds -= Time.deltaTime;
-        timeCounter.text = Mathf.Round(timeLimitInSeconds).ToString();
-        if (timeLimitInSeconds <= 0f) {
-            displayTryAgainScreen();
+        if (timeIsRunning) {
+            timeLimitInSeconds -= Time.deltaTime;
+            timeCounter.text = Mathf.Ceil(timeLimitInSeconds).ToString();
+            if (timeLimitInSeconds <= 10f) {
+                timeCounter.color = Color.red;
+            }
+            if (timeLimitInSeconds <= 0f) {
+                timeIsRunning = false;
+                displayTryAgainScreen();
+            }
         }
 
         if (
@@ -75,6 +82,8 @@ public class UIManager : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         PlayerScoring.lifes--;
         PlayerScoring.hearts = 3;
+        PlayerScoring.cherries = 0;
+        PlayerScoring.gems = 0;
         Time.timeScale = 1f;
     }
 

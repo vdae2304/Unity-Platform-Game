@@ -29,13 +29,12 @@ public class PlayerScoring : MonoBehaviour {
             }
             if (hearts == 0) {
                 animator.SetTrigger("isDeath");
-                Destroy(rigidBody);
-                Destroy(this, 0.75f);
+                Invoke("KillPlayer", 0.75f);
             }
         }
         else if (other.gameObject.tag == "InstantKill") {
             hearts = 0;
-            Destroy(this);
+            KillPlayer();
         }
     }
 
@@ -48,7 +47,8 @@ public class PlayerScoring : MonoBehaviour {
         }
     }
 
-    void OnDestroy() {
+    void KillPlayer() {
+        gameObject.SetActive(false);
         UI.displayTryAgainScreen();
     }
 }
