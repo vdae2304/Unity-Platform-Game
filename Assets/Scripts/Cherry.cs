@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Cherry : MonoBehaviour {
 
+    private bool collected = false;
+
     void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.tag == "Player") {
+        if (other.gameObject.tag == "Player" && !collected) {
+            collected = true;
             PlayerScoring.cherries++;
             Destroy(gameObject);
         }
