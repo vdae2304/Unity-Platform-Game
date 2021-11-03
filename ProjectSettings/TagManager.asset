@@ -11,6 +11,8 @@ TagManager:
   - InstantKill
   - Cherry
   - Diamond
+  - EnemyInvincible
+  - Boss
   layers:
   - Default
   - TransparentFX
