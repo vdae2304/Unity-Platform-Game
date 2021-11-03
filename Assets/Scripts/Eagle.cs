@@ -13,7 +13,7 @@ public class Eagle : MonoBehaviour {
     public Vector2 maxDistance;
     public float visibilityRadius;
 
-    public float dropProbability = 0.1f;
+    public float dropProbability = 0.2f;
     public GameObject[] dropItems;
 
     void Start() {

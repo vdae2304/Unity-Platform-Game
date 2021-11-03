@@ -13,7 +13,7 @@ public class Opposum : MonoBehaviour {
     public float chasingSpeed = 3.0f;
     public float maxDistance;
 
-    public float dropProbability = 0.1f;
+    public float dropProbability = 0.2f;
     public GameObject[] dropItems;
 
     void Start() {

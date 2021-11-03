@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2313516918529682678}
   - component: {fileID: 8191118176644884746}
   m_Layer: 31
-  m_Name: Ground
+  m_Name: Pallete
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

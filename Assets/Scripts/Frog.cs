@@ -11,7 +11,7 @@ public class Frog : MonoBehaviour {
     public float stepSize = 2.0f;
     public float jumpForce = 8.0f;
     
-    public float dropProbability = 0.1f;
+    public float dropProbability = 0.2f;
     public GameObject[] dropItems;
 
     void Start() {

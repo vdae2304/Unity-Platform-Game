@@ -156,7 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stepSize: 2
   jumpForce: 8
-  dropProbability: 0.1
+  dropProbability: 0.2
   dropItems:
   - {fileID: 6490806689031424781, guid: 84713d9994a50ed49a8251c17c4a62da, type: 3}
   - {fileID: 2383627370958425850, guid: f276e546220ef0241bb386effded028c, type: 3}
