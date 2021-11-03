@@ -10,15 +10,20 @@ public class Boss : MonoBehaviour {
     private Transform player;
     private Vector3 initialPosition;
 
-    public int lifes = 3;
+    public int lifes;
     public float speed;
     public float maxDistance;
 
-    public GameObject[] dropEnemies;
-    private GameObject lastDropped = null;
-
     private string AttackMode = "FromDistance";
+    private bool canSufferDamage = true;
+    private bool canDropObject = true;
     private float timeToChangeMode = 15.0f;
+
+    public float probabilityToDropEnemy = 0.01f;
+    public GameObject[] dropObjects;
+    public GameObject[] dropEnemies;
+    private GameObject objectDropped = null;
+    private GameObject enemyDropped = null;
 
     void Start() {
         animator = GetComponent<Animator>();
@@ -47,27 +52,46 @@ public class Boss : MonoBehaviour {
     void AttackFromDistance() {
         Vector2 newVelocity = rigidBody.velocity;
         float distanceToCenter = transform.position.x - initialPosition.x;
-
         if (Mathf.Abs(distanceToCenter) > maxDistance) {
             spriteRenderer.flipX = (distanceToCenter < 0);
             newVelocity.x = (spriteRenderer.flipX ? speed : -speed);
         }
         rigidBody.velocity = newVelocity;
-
-        if (lastDropped == null) {
-            lastDropped = dropEnemies[Random.Range(0, dropEnemies.Length)];
-            lastDropped = Instantiate(lastDropped,
-                                      transform.position + Vector3.down, 
-                                      transform.rotation);
-            if (lastDropped != null) {
-                Destroy(lastDropped, 10.0f);
-            }
+        if (canDropObject) {
+            DropNewObject(distanceToCenter);
         }
-
         if (timeToChangeMode <= 0f) {
             AttackMode = "GoDown";
-            timeToChangeMode = 5f;
+            timeToChangeMode = 3f;
         }
+    }
+
+    void DropNewObject(float distanceToCenter) {
+        if (
+            enemyDropped == null && 
+            Mathf.Abs(distanceToCenter) <= 0.5*maxDistance &&
+            Random.value <= probabilityToDropEnemy
+        ) {
+            enemyDropped = dropEnemies[Random.Range(0, dropEnemies.Length)];
+            enemyDropped = Instantiate(enemyDropped, 
+                                       transform.position + Vector3.down, 
+                                       transform.rotation);
+            canDropObject = false;
+            Invoke("ResetCanDropObject", 2f);
+            Destroy(enemyDropped, 9f);
+        }
+        else if (objectDropped == null) {
+            objectDropped = dropObjects[Random.Range(0, dropObjects.Length)];
+            objectDropped = Instantiate(objectDropped, 
+                                       transform.position + Vector3.down, 
+                                       transform.rotation);
+            canDropObject = false;
+            Invoke("ResetCanDropObject", 1f);
+        }
+    }
+
+    void ResetCanDropObject() {
+        canDropObject = true;
     }
 
     void GoDownAndFollowPlayer() {
@@ -76,6 +100,7 @@ public class Boss : MonoBehaviour {
         rigidBody.velocity = speed * direction.normalized;
         if (timeToChangeMode <= 0f) {
             AttackMode = "GoBack";
+            timeToChangeMode = 3f;
         }
     }
 
@@ -91,17 +116,23 @@ public class Boss : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.tag == "Player") {
+        if (other.gameObject.tag == "Player" && canSufferDamage) {
             if (lifes > 0) {
                 lifes--;
                 animator.SetTrigger("isHurt");
-                other.gameObject.GetComponent<Rigidbody2D>().velocity = 
-                PlayerController.jumpForce*Vector2.up;
+                canSufferDamage = false;
+                Invoke("ResetCanSufferDamage", 2f);
             }
             if (lifes == 0) {
                 animator.SetTrigger("isDeath");
                 Destroy(this.gameObject, 0.5f);
             }
+            other.gameObject.GetComponent<Rigidbody2D>().velocity = 
+            PlayerController.jumpForce*Vector2.up;
         }
+    }
+
+    void ResetCanSufferDamage() {
+        canSufferDamage = true;
     }
 }

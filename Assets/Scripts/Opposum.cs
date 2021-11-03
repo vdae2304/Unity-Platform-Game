@@ -48,7 +48,8 @@ public class Opposum : MonoBehaviour {
     void RandomDrop() {
         if (Random.value <= dropProbability) {
             GameObject drop = dropItems[Random.Range(0, dropItems.Length)];
-            Instantiate(drop, transform.position, transform.rotation);
+            drop = Instantiate(drop, transform.position, transform.rotation);
+            Destroy(drop, 10f);
         }
     }
 }

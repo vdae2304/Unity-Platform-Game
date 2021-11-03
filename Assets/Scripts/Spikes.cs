@@ -13,11 +13,7 @@ public class Spikes : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D other) {
-        if (
-            other.gameObject.tag == "Ground" || 
-            other.gameObject.tag == "Player" || 
-            other.gameObject.tag == "InstantKill"
-        ) {
+        if (other.gameObject.tag != "Boss") {
             animator.SetTrigger("Destroy");
             rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
             Destroy(this.gameObject, 0.5f);
