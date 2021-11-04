@@ -16,7 +16,7 @@ public class Boss : MonoBehaviour {
 
     private string AttackMode = "FromDistance";
     private bool canSufferDamage = true;
-    private bool canDropObject = true;
+    private bool canDropObject = false;
     private float timeToChangeMode = 15.0f;
 
     public float probabilityToDropEnemy = 0.01f;
@@ -32,6 +32,7 @@ public class Boss : MonoBehaviour {
         player = GameObject.Find("player").transform;
         initialPosition = transform.position;
         rigidBody.velocity = speed * Vector3.left;
+        Invoke("ResetCanDropObject", 1f);
     }
 
     void Update() {
