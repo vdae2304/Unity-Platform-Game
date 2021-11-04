@@ -11,6 +11,6 @@ public class AudioManager : MonoBehaviour {
 
     void Start() {
         audioSource = GetComponent<AudioSource>();
-        jumpSound = Resources.Load<AudioClip>("Audio/smrpg_jump");
+        jump = Resources.Load<AudioClip>("Audio/smrpg_jump");
     }
 }
