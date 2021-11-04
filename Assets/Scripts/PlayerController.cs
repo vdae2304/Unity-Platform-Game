@@ -7,9 +7,6 @@ public class PlayerController : MonoBehaviour {
     private Animator animator;
     private Rigidbody2D rigidBody;
     private SpriteRenderer spriteRenderer;
-    
-    private AudioSource audioSource;
-    private AudioClip jumpSound;
 
     public static float speed = 7.0f;
     public static float jumpForce = 8.0f;
@@ -20,9 +17,6 @@ public class PlayerController : MonoBehaviour {
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        audioSource = GameObject.Find("UI/Audio Source")
-                                .GetComponent<AudioSource>();
-        jumpSound = Resources.Load<AudioClip>("Audio/smrpg_jump");
     }
 
     void Update() {
@@ -46,7 +40,7 @@ public class PlayerController : MonoBehaviour {
             if (Input.GetButtonDown("Jump") && isOnGround) {
                 velocity.y = jumpForce;
                 animator.SetBool("isJumping", true);
-                audioSource.PlayOneShot(jumpSound, 0.7f);
+                AudioManager.audioSource.PlayOneShot(AudioManager.jump, 0.7f);
             }
             
             rigidBody.velocity = velocity;

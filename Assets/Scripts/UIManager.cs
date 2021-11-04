@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour {
 
-    [SerializeField] private AudioSource audioSource;
-
     [SerializeField] private Image heartsCounter;
     [SerializeField] private Sprite[] heartsSprites;
     [SerializeField] private Text lifesCounter;
@@ -58,17 +56,17 @@ public class UIManager : MonoBehaviour {
     public void togglePause() {
         pauseScreen.SetActive(!pauseScreen.activeSelf);
         if (pauseScreen.activeSelf) {
-            audioSource.Pause();
+            AudioManager.audioSource.Pause();
             Time.timeScale = 0f;
         }
         else {
-            audioSource.UnPause();
+            AudioManager.audioSource.UnPause();
             Time.timeScale = 1f;
         }
     }
 
     public void displayTryAgainScreen() {
-        audioSource.Stop();
+        AudioManager.audioSource.Stop();
         Time.timeScale = 0f;
         if (PlayerScoring.lifes > 0) {
             tryAgainScreen.SetActive(true);
@@ -81,9 +79,6 @@ public class UIManager : MonoBehaviour {
     public void RestartLevel() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         PlayerScoring.lifes--;
-        PlayerScoring.hearts = 3;
-        PlayerScoring.cherries = 0;
-        PlayerScoring.gems = 0;
         Time.timeScale = 1f;
     }
 
