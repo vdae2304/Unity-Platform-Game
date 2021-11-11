@@ -1433,7 +1433,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 006abcabc24e156419eddfc3b7c6a848, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.7
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1529,7 +1529,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe38cf71483908a4db84123c3f819ffa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_audioSource: {fileID: 6297869470319802899}
 --- !u!1 &6297869470538674181
 GameObject:
   m_ObjectHideFlags: 0
@@ -1651,7 +1650,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d10df966f615e4a9036298594ed783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 6297869470319802899}
   heartsCounter: {fileID: 6297869470554154805}
   heartsSprites:
   - {fileID: 361783521192437178, guid: 4e225ff8d34b86f4ab7c44ad348974a7, type: 3}

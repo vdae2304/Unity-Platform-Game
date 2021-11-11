@@ -83,6 +83,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void Quit() {
-        Application.Quit();
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1f;
     }
 }

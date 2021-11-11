@@ -11,9 +11,11 @@ public class FollowCamera : MonoBehaviour {
     public float maxY = Mathf.Infinity;
 
     void Update() {
-        Vector3 position = transform.position;
-        position.x = Mathf.Clamp(player.position.x, minX, maxX);
-        position.y = Mathf.Clamp(player.position.y, minY, maxY);
-        transform.position = position;
+        if (player != null) {
+            Vector3 position = transform.position;
+            position.x = Mathf.Clamp(player.position.x, minX, maxX);
+            position.y = Mathf.Clamp(player.position.y, minY, maxY);
+            transform.position = position;
+        }
     }
 }

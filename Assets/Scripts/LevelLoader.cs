@@ -11,7 +11,6 @@ public class LevelLoader : MonoBehaviour {
 
     void Start() {
         PlayerScoring.hearts = 3;
-        PlayerScoring.cherries = 0;
         PlayerScoring.gems = 0;
         StartCoroutine(CrossfadeIn());
     }
