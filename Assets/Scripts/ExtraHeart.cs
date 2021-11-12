@@ -9,8 +9,8 @@ public class ExtraHeart : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Player" && !collected) {
             collected = true;
-            if (PlayerScoring.hearts < 3) {
-                PlayerScoring.hearts++;
+            if (PlayerController.hearts < 3) {
+                PlayerController.hearts++;
             }            
             Destroy(gameObject);
         }

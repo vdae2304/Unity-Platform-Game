@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spikes : MonoBehaviour {
+public class ExplossiveCrate : MonoBehaviour {
 
     private Animator animator;
     private Rigidbody2D rigidBody;
@@ -13,10 +13,8 @@ public class Spikes : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.tag != "Boss") {
-            animator.SetTrigger("Destroy");
-            rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
-            Destroy(this.gameObject, 0.5f);
-        }
+        animator.SetTrigger("Destroy");
+        rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+        Destroy(gameObject, 0.5f);
     }
 }

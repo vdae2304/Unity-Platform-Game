@@ -9,7 +9,7 @@ public class Cherry : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Player" && !collected) {
             collected = true;
-            PlayerScoring.cherries++;
+            PlayerController.cherries++;
             Destroy(gameObject);
         }
     }

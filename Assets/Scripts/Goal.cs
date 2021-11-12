@@ -5,27 +5,33 @@ using UnityEngine.SceneManagement;
 
 public class Goal : MonoBehaviour {
 
-    LevelLoader levelLoader;
-
-    void Start() {
-        levelLoader = GameObject.Find("LevelLoader")
-                                .GetComponent<LevelLoader>();
-    }
+    public int gemsRequired = 0;
 
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Player") {
-            if (PlayerScoring.gems >= 3) {
-                levelLoader.displayLevelClearedScreen();
+            if (PlayerController.gems >= gemsRequired) {
+                AudioManager.Stop();
+                AudioManager.PlayOneShot(AudioManager.stageClearSound);
+                other.gameObject.GetComponent<Rigidbody2D>()
+                                .constraints = RigidbodyConstraints2D.FreezeAll;
+                Invoke("displayLevelClearedScreen", 7f);
             }
             else {
-                levelLoader.displayLevelUnclearedScreen();
+                LevelLoader.displayLevelUnclearedScreen();
             }
         }
     }
 
     void OnTriggerExit2D(Collider2D other) {
-        if (other.gameObject.tag == "Player" && PlayerScoring.gems < 3) {
-            levelLoader.displayLevelUnclearedScreen(false);
+        if (
+            other.gameObject.tag == "Player" && 
+            PlayerController.gems < gemsRequired
+        ) {
+            LevelLoader.displayLevelUnclearedScreen(false);
         }
+    }
+
+    void displayLevelClearedScreen() {
+        LevelLoader.displayLevelClearedScreen();
     }
 }

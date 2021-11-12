@@ -31,7 +31,7 @@ public class Opposum : MonoBehaviour {
         if (Mathf.Abs(distanceToCenter) > maxDistance) {
             spriteRenderer.flipX = (distanceToCenter < 0);
         }
-        else if (distanceToPlayer < maxDistance - 0.1) {
+        else if (distanceToPlayer < maxDistance) {
             spriteRenderer.flipX = (player.position.x > transform.position.x);
             velocity.x = chasingSpeed;
         }

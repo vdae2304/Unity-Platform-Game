@@ -9,7 +9,7 @@ public class ExtraLife : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Player" && !collected) {
             collected = true;
-            PlayerScoring.lifes++;
+            PlayerController.lifes++;
             Destroy(gameObject);
         }
     }

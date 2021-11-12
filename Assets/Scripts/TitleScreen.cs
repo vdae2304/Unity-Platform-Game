@@ -9,13 +9,16 @@ public class TitleScreen : MonoBehaviour {
     [SerializeField] private GameObject[] InstructionsList;
     private int currentScreen = 0;
 
+    void Start() {
+        PlayerController.lifes = 3;
+        PlayerController.hearts = 3;
+        PlayerController.cherries = 0;
+        PlayerController.gems = 0;
+        Time.timeScale = 1f;
+    }
+
     public void StartGame() {
-        PlayerScoring.lifes = 3;
-        PlayerScoring.hearts = 3;
-        PlayerScoring.cherries = 0;
-        PlayerScoring.gems = 0;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, 
-                               LoadSceneMode.Single);
+        SceneManager.LoadScene(1);
     }
 
     public void DisplayInstructions() {

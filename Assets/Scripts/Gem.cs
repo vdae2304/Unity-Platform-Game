@@ -14,7 +14,7 @@ public class Gem : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Player" && !collected) {
             collected = true;
-            PlayerScoring.gems++;
+            PlayerController.gems++;
             animator.SetTrigger("collected");
             Destroy(gameObject, 0.4f);
         }
