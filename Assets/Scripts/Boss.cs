@@ -127,7 +127,7 @@ public class Boss : MonoBehaviour {
             if (lifes == 0) {
                 animator.SetTrigger("isDeath");
                 goal.SetActive(true);
-                Destroy(gameObject, 0.5f);
+                Destroy(gameObject, 0.75f);
             }
             other.gameObject.GetComponent<Rigidbody2D>().velocity = 
             PlayerController.jumpForce * Vector2.up;
