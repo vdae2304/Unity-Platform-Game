@@ -152,7 +152,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 289751870}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &14272430
 BoxCollider2D:
@@ -593,8 +593,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 14272429}
   - {fileID: 1151863175}
+  - {fileID: 14272429}
   - {fileID: 1035642935}
   - {fileID: 1121346730}
   - {fileID: 1618064186}
@@ -2038,7 +2038,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1151863175}
-  - component: {fileID: 1151863177}
   - component: {fileID: 1151863176}
   m_Layer: 0
   m_Name: Goal
@@ -2059,7 +2058,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 289751870}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1151863176
 BoxCollider2D:
@@ -2087,19 +2086,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.3, y: 2}
   m_EdgeRadius: 0
---- !u!114 &1151863177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1151863174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498a8f0c27903c7468f7c6dc4697cb13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gemsRequired: 0
 --- !u!1001 &1166188357
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2419,6 +2405,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1092521473, guid: 60d53bed8a1cb034eb959b0ff9bf238f, type: 3}
+      propertyPath: gemsToPassLevel
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8246504632259212386, guid: 60d53bed8a1cb034eb959b0ff9bf238f, type: 3}
       propertyPath: m_Pivot.x
       value: 0

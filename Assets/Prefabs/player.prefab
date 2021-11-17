@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 6132797633308123989}
   - component: {fileID: 3722599517004363911}
   - component: {fileID: 5296061077566632219}
-  - component: {fileID: 5296061077566632221}
   m_Layer: 3
   m_Name: player
   m_TagString: Player
@@ -160,8 +159,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.46963072, y: -1.0030286}
-  - {x: 0.27585363, y: -1.0007074}
+  - {x: -0.5111141, y: -1.0076377}
+  - {x: 0.30350828, y: -1.0099256}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -176,17 +175,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de212fd030dfdc14394e723a5648b087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5296061077566632221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5296061077566632214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7aeffbcc273df34d92bc06fb313d5ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

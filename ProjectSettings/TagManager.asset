@@ -12,7 +12,6 @@ TagManager:
   - Cherry
   - Diamond
   - EnemyInvincible
-  - Boss
   layers:
   - Default
   - TransparentFX

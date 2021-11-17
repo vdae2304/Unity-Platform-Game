@@ -1113,10 +1113,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1262781063}
   - component: {fileID: 1262781064}
-  - component: {fileID: 1262781065}
   m_Layer: 0
   m_Name: Goal
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1157,19 +1156,6 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!114 &1262781065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1262781062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498a8f0c27903c7468f7c6dc4697cb13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gemsRequired: 0
 --- !u!1001 &1378641440
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1585,6 +1571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goal: {fileID: 1262781062}
+  player: {fileID: 2031936344}
   lifes: 3
   speed: 4
   maxDistance: 6
@@ -1608,7 +1595,7 @@ GameObject:
   - component: {fileID: 3019138638885899156}
   m_Layer: 6
   m_Name: Boss
-  m_TagString: Boss
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
