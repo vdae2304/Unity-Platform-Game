@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Opposum : MonoBehaviour {
 
+    private Animator animator;
+    private Collider2D collider;
     private Rigidbody2D rigidBody;
     private SpriteRenderer spriteRenderer;
     private Transform player;
@@ -17,6 +19,8 @@ public class Opposum : MonoBehaviour {
     public GameObject[] dropItems;
 
     void Start() {
+        animator = GetComponent<Animator>();
+        collider = GetComponent<Collider2D>();
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         player = GameObject.Find("player").transform;
@@ -41,7 +45,11 @@ public class Opposum : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Player") {
+            animator.SetTrigger("isDeath");
+            collider.enabled = false;
+            rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
             Invoke("RandomDrop", 0.5f);
+            Destroy(gameObject, 0.75f);
         }
     }
 

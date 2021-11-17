@@ -6,13 +6,18 @@ using UnityEngine.SceneManagement;
 public class LevelLoader : MonoBehaviour {
 
     private static GameObject transitionScreen;
+
+    public int gemsToPassLevel = 0;
+    public static int gemsRequired;
     private static GameObject levelClearedScreen;
     private static GameObject levelUnclearedScreen;
+
     private static GameObject tryAgainScreen;
     private static GameObject gameOverScreen;
 
     void Start() {
         transitionScreen = transform.Find("Transition").gameObject;
+        gemsRequired = gemsToPassLevel;
         levelClearedScreen = transform.Find("LevelCleared").gameObject;
         levelUnclearedScreen = transform.Find("LevelUncleared").gameObject;
         tryAgainScreen = transform.Find("TryAgain").gameObject;
@@ -30,8 +35,10 @@ public class LevelLoader : MonoBehaviour {
         transitionScreen.SetActive(false);
     }
 
-    public static void displayLevelClearedScreen() {
+    public static IEnumerator displayLevelClearedScreen() {
         AudioManager.Stop();
+        AudioManager.PlayOneShot(AudioManager.stageClearSound);
+        yield return new WaitForSeconds(7f);
         Time.timeScale = 0f;
         levelClearedScreen.SetActive(true);
     }

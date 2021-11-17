@@ -5,6 +5,7 @@ using UnityEngine;
 public class Frog : MonoBehaviour {
 
     private Animator animator;
+    private Collider2D collider;
     private Rigidbody2D rigidBody;
     private SpriteRenderer spriteRenderer;
 
@@ -16,8 +17,16 @@ public class Frog : MonoBehaviour {
 
     void Start() {
         animator = GetComponent<Animator>();
+        collider = GetComponent<Collider2D>();
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    void Jump() {
+        spriteRenderer.flipX = (stepSize > 0);
+        animator.SetBool("isJumping", true);
+        rigidBody.velocity = new Vector2(stepSize, jumpForce);
+        stepSize *= -1;
     }
 
     void OnCollisionEnter2D(Collision2D other) {
@@ -29,15 +38,12 @@ public class Frog : MonoBehaviour {
     
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Player") {
+            animator.SetTrigger("isDeath");
+            collider.enabled = false;
+            rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
             Invoke("RandomDrop", 0.5f);
+            Destroy(gameObject, 0.75f);
         }
-    }
-
-    void Jump() {
-        spriteRenderer.flipX = (stepSize > 0);
-        animator.SetBool("isJumping", true);
-        rigidBody.velocity = new Vector2(stepSize, jumpForce);
-        stepSize *= -1;
     }
 
     void RandomDrop() {

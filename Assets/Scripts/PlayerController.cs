@@ -13,8 +13,8 @@ public class PlayerController : MonoBehaviour {
     public static int cherries = 0;
     public static int gems = 0;
 
-    public static float speed = 7.0f;
-    public static float jumpForce = 8.0f;
+    public float speed = 7.0f;
+    public float jumpForce = 8.0f;
 
     private bool isOnGround = true;
     private bool isOnLadder = false;
@@ -58,12 +58,16 @@ public class PlayerController : MonoBehaviour {
                 animator.SetBool("isClimbing", true);
                 break;
             case "Enemy":
-                other.enabled = false;
-                other.gameObject.GetComponent<Animator>().SetTrigger("isDeath");
-                other.gameObject.GetComponent<Rigidbody2D>()
-                                .constraints = RigidbodyConstraints2D.FreezeAll;
                 rigidBody.velocity = jumpForce * Vector2.up;
-                Destroy(other.gameObject, 0.75f);
+                break;
+            case "Finish":
+                if (gems >= LevelLoader.gemsRequired) {
+                    rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+                    StartCoroutine(LevelLoader.displayLevelClearedScreen());
+                }
+                else {
+                    LevelLoader.displayLevelUnclearedScreen();
+                }
                 break;
         }
     }
@@ -77,6 +81,11 @@ public class PlayerController : MonoBehaviour {
                 isOnLadder = false;
                 animator.SetBool("isClimbing", false);
                 break;
+            case "Finish":
+                if (gems < LevelLoader.gemsRequired) {
+                    LevelLoader.displayLevelUnclearedScreen(false);
+                }
+                break;
         }
     }
 
@@ -84,7 +93,6 @@ public class PlayerController : MonoBehaviour {
         switch (other.gameObject.tag) {
             case "Enemy":
             case "EnemyInvincible":
-            case "Boss":
                 animator.SetTrigger("isHurt");
                 if (hearts > 0) {
                     hearts--;

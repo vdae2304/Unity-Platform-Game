@@ -5,11 +5,12 @@ using UnityEngine;
 public class Boss : MonoBehaviour {
 
     private Animator animator;
+    private Collider2D collider;
     private Rigidbody2D rigidBody;
     private SpriteRenderer spriteRenderer;
 
-    public GameObject goal;
-    private Transform player;
+    [SerializeField] private GameObject goal;
+    [SerializeField] private Transform player;
     private Vector3 initialPosition;
 
     public int lifes;
@@ -25,9 +26,9 @@ public class Boss : MonoBehaviour {
 
     void Start() {
         animator = GetComponent<Animator>();
+        collider = GetComponent<Collider2D>();
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        player = GameObject.Find("player").transform;
         initialPosition = transform.position;
         Invoke("ResetCanDropObject", 1f);
         Invoke("ResetCanDropEnemy", 2f);
@@ -98,8 +99,7 @@ public class Boss : MonoBehaviour {
         ) {
             canDropObject = false;
             drop = Instantiate(drop, transform.position, transform.rotation);
-            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), 
-                                      drop.GetComponent<Collider2D>());
+            Physics2D.IgnoreCollision(collider, drop.GetComponent<Collider2D>());
             Invoke("ResetCanDropObject", 2f);
             if (drop.tag == "Enemy") {
                 canDropEnemy = false;
@@ -122,21 +122,18 @@ public class Boss : MonoBehaviour {
             if (lifes > 0) {
                 lifes--;
                 animator.SetTrigger("isHurt");
-                StartCoroutine(IgnoreDealtDamage(other));
+                collider.enabled = false;
+                Invoke("ResetCollider", 2f);
             }
             if (lifes == 0) {
                 animator.SetTrigger("isDeath");
                 goal.SetActive(true);
                 Destroy(gameObject, 0.75f);
             }
-            other.gameObject.GetComponent<Rigidbody2D>().velocity = 
-            PlayerController.jumpForce * Vector2.up;
         }
     }
 
-    IEnumerator IgnoreDealtDamage(Collider2D other) {
-        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), other);
-        yield return new WaitForSeconds(2f);
-        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), other, false);
+    void ResetCollider() {
+        collider.enabled = true;
     }
 }
