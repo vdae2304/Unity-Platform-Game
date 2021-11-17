@@ -30,23 +30,19 @@ public class PlayerController : MonoBehaviour {
             Vector2 velocity = rigidBody.velocity;
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
-
-            velocity.x = horizontalInput * speed;
-            animator.SetFloat("speed", Mathf.Abs(velocity.x));
             if (horizontalInput != 0) {
-                spriteRenderer.flipX = (horizontalInput < 0);
+                velocity.x = horizontalInput * speed;
+                spriteRenderer.flipX = (velocity.x < 0);
             }
-
+            animator.SetFloat("speed", Mathf.Abs(horizontalInput));
             if (Input.GetButtonDown("Jump") && isOnGround) {
                 velocity.y = jumpForce;
                 animator.SetBool("isJumping", true);
                 AudioManager.PlayOneShot(AudioManager.jumpSound);
             }
-
             if (isOnLadder) {
                 velocity.y = verticalInput * speed;
             }
-            
             rigidBody.velocity = velocity;
         }
     }

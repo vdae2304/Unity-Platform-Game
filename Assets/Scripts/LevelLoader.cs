@@ -17,7 +17,6 @@ public class LevelLoader : MonoBehaviour {
         levelUnclearedScreen = transform.Find("LevelUncleared").gameObject;
         tryAgainScreen = transform.Find("TryAgain").gameObject;
         gameOverScreen = transform.Find("GameOver").gameObject;
-
         PlayerController.hearts = 3;
         PlayerController.gems = 0;
         Time.timeScale = 1f;

@@ -23,24 +23,26 @@ public class UIManager : MonoBehaviour {
         lifesCounter.text = PlayerController.lifes.ToString();
         cherryCounter.text = PlayerController.cherries.ToString();
         gemCounter.text = PlayerController.gems.ToString();
-
         if (timeIsRunning) {
-            timeLimitInSeconds -= Time.deltaTime;
-            timeCounter.text = Mathf.Ceil(timeLimitInSeconds).ToString();
-            if (timeLimitInSeconds <= 30f) {
-                timeCounter.color = Color.red;
-            }
-            if (timeLimitInSeconds <= 0f) {
-                timeIsRunning = false;
-                LevelLoader.displayTryAgainScreen();
-            }
+            updateTime();
         }
-
         if (
             Input.GetButtonDown("Pause") && 
             (Time.timeScale != 0 || pauseScreen.activeSelf)
         ) {
             togglePause();
+        }
+    }
+
+    void updateTime() {
+        timeLimitInSeconds -= Time.deltaTime;
+        timeCounter.text = Mathf.Ceil(timeLimitInSeconds).ToString();
+        if (timeLimitInSeconds <= 30f) {
+            timeCounter.color = Color.red;
+        }
+        if (timeLimitInSeconds <= 0f) {
+            timeIsRunning = false;
+            LevelLoader.displayTryAgainScreen();
         }
     }
 
