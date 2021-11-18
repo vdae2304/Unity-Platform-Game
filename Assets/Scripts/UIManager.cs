@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour {
 
     [SerializeField] private GameObject pauseScreen;
 
-    void Update() {
+    void FixedUpdate() {
         heartsCounter.sprite = heartsSprites[PlayerController.hearts];
         lifesCounter.text = PlayerController.lifes.ToString();
         cherryCounter.text = PlayerController.cherries.ToString();
@@ -26,6 +26,9 @@ public class UIManager : MonoBehaviour {
         if (timeIsRunning) {
             updateTime();
         }
+    }
+
+    void Update() {
         if (
             Input.GetButtonDown("Pause") && 
             (Time.timeScale != 0 || pauseScreen.activeSelf)
@@ -35,14 +38,14 @@ public class UIManager : MonoBehaviour {
     }
 
     void updateTime() {
-        timeLimitInSeconds -= Time.deltaTime;
+        timeLimitInSeconds -= Time.fixedDeltaTime;
         timeCounter.text = Mathf.Ceil(timeLimitInSeconds).ToString();
         if (timeLimitInSeconds <= 30f) {
             timeCounter.color = Color.red;
         }
         if (timeLimitInSeconds <= 0f) {
             timeIsRunning = false;
-            LevelLoader.displayTryAgainScreen();
+            LevelLoader.displayTryAgainScreen("Se agoto el tiempo");
         }
     }
 

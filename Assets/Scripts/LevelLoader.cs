@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour {
@@ -9,22 +10,25 @@ public class LevelLoader : MonoBehaviour {
 
     public int gemsToPassLevel = 0;
     public static int gemsRequired;
-    private static GameObject levelClearedScreen;
-    private static GameObject levelUnclearedScreen;
 
+    private static GameObject levelClearedScreen;
     private static GameObject tryAgainScreen;
     private static GameObject gameOverScreen;
+    private static Text tryAgainText;
+
+    void Awake() {
+        PlayerController.hearts = 3;
+        PlayerController.gems = 0;
+        Time.timeScale = 1f;
+    }
 
     void Start() {
         transitionScreen = transform.Find("Transition").gameObject;
         gemsRequired = gemsToPassLevel;
         levelClearedScreen = transform.Find("LevelCleared").gameObject;
-        levelUnclearedScreen = transform.Find("LevelUncleared").gameObject;
         tryAgainScreen = transform.Find("TryAgain").gameObject;
         gameOverScreen = transform.Find("GameOver").gameObject;
-        PlayerController.hearts = 3;
-        PlayerController.gems = 0;
-        Time.timeScale = 1f;
+        tryAgainText = tryAgainScreen.GetComponentInChildren<Text>();
         StartCoroutine(CrossfadeIn());
     }
 
@@ -36,21 +40,23 @@ public class LevelLoader : MonoBehaviour {
     }
 
     public static IEnumerator displayLevelClearedScreen() {
-        AudioManager.Stop();
-        AudioManager.PlayOneShot(AudioManager.stageClearSound);
-        yield return new WaitForSeconds(7f);
-        Time.timeScale = 0f;
-        levelClearedScreen.SetActive(true);
+        if (PlayerController.gems >= gemsRequired) {
+            AudioManager.Stop();
+            AudioManager.PlayOneShot(AudioManager.stageClearSound);
+            yield return new WaitForSeconds(7f);
+            Time.timeScale = 0f;
+            levelClearedScreen.SetActive(true);
+        }
+        else {
+            displayTryAgainScreen("Diamantes insuficientes");
+        }
     }
 
-    public static void displayLevelUnclearedScreen(bool display = true) {
-        levelUnclearedScreen.SetActive(display);
-    }
-
-    public static void displayTryAgainScreen() {
+    public static void displayTryAgainScreen(string text) {
         AudioManager.Stop();
         Time.timeScale = 0f;
         if (PlayerController.lifes > 0) {
+            tryAgainText.text = text;
             tryAgainScreen.SetActive(true);
         }
         else {

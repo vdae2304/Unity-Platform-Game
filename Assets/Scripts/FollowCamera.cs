@@ -10,7 +10,7 @@ public class FollowCamera : MonoBehaviour {
     public float minY = 0;
     public float maxY = Mathf.Infinity;
 
-    void Update() {
+    void LateUpdate() {
         if (player != null) {
             Vector3 position = transform.position;
             position.x = Mathf.Clamp(player.position.x, minX, maxX);

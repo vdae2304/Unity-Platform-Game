@@ -8,7 +8,7 @@ public class AudioManager : MonoBehaviour {
     public static AudioClip jumpSound;
     public static AudioClip stageClearSound;
 
-    void Start() {
+    void Awake() {
         audioSource = GetComponent<AudioSource>();
         jumpSound = Resources.Load<AudioClip>("Audio/smrpg_jump");
         stageClearSound = Resources.Load<AudioClip>("Audio/mega-man-10-stage-clear");

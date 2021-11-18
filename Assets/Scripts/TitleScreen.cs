@@ -9,7 +9,7 @@ public class TitleScreen : MonoBehaviour {
     [SerializeField] private GameObject[] InstructionsList;
     private int currentScreen = 0;
 
-    void Start() {
+    void Awake() {
         PlayerController.lifes = 3;
         PlayerController.hearts = 3;
         PlayerController.cherries = 0;

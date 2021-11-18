@@ -20,7 +20,7 @@ public class MovingPlatform : MonoBehaviour {
         initialPosition = transform.position;
     }
 
-    void Update() {
+    void FixedUpdate() {
         if (isMoving) {
             Transform target = path.GetChild(currentPoint);
             Vector2 direction = target.position - transform.position;

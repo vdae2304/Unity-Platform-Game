@@ -61,13 +61,8 @@ public class PlayerController : MonoBehaviour {
                 rigidBody.velocity = jumpForce * Vector2.up;
                 break;
             case "Finish":
-                if (gems >= LevelLoader.gemsRequired) {
-                    rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
-                    StartCoroutine(LevelLoader.displayLevelClearedScreen());
-                }
-                else {
-                    LevelLoader.displayLevelUnclearedScreen();
-                }
+                rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+                StartCoroutine(LevelLoader.displayLevelClearedScreen());
                 break;
         }
     }
@@ -80,11 +75,6 @@ public class PlayerController : MonoBehaviour {
             case "Ladder":
                 isOnLadder = false;
                 animator.SetBool("isClimbing", false);
-                break;
-            case "Finish":
-                if (gems < LevelLoader.gemsRequired) {
-                    LevelLoader.displayLevelUnclearedScreen(false);
-                }
                 break;
         }
     }
@@ -112,6 +102,6 @@ public class PlayerController : MonoBehaviour {
         animator.SetTrigger("isDeath");
         rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
         yield return new WaitForSeconds(0.75f);
-        LevelLoader.displayTryAgainScreen();
+        LevelLoader.displayTryAgainScreen("Has muerto");
     }
 }
